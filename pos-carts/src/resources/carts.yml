@@ -1,0 +1,5 @@
+spring:
+    application:
+      name:pos-carts
+server:
+  port: 8081

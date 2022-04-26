@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: gateway
+  freemarker:
+    enabled: true # Use Eureka dashboard FreeMarker templates
+  cloud:
+    gateway:
+      routes:
+        - id: posProduct
+          uri: http://localhost:8082
+          predicates:
+          - Path=/api/**
+
+    # thymeleaf:
+  #   cache: false             # Allow Thymeleaf templates to be reloaded at runtime
+  #   prefix: classpath:/accounts-server/templates/    # Trailing / mandatory
+  #                            # Template location for this application only
+
+error.path: /error
+
+# HTTP Server
+server.port: 2222
+
+# Discovery Server Access
+#  1. DEV ONLY: Reduce the lease renewal interval to speed up registration
+#  2. Define URL of registration server (defaultZone)
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    instance:
+      leaseRenewalIntervalInSeconds: 10

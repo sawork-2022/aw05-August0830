@@ -8,6 +8,7 @@
         <module>pos-carts</module>
         <module>pos-discovery</module>
         <module>pos-gateway</module>
+        <module>pos-api</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -24,6 +25,10 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
+        <jsoup.version>1.12.1</jsoup.version>
+        <swagger2.version>3.0.0</swagger2.version>
+        <lombok.version>1.18.22</lombok.version>
+        <spring.cloud.version>3.1.1</spring.cloud.version>
     </properties>
     <dependencies>
         <dependency>
@@ -62,6 +67,37 @@
                 <artifactId>mapstruct-processor</artifactId>
                 <version>${mapstruct.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.jsoup</groupId>
+                <artifactId>jsoup</artifactId>
+                <version>${jsoup.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.micropos</groupId>
+                <artifactId>pos-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+                <version>${spring.cloud.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+                <version>${spring.cloud.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-commons</artifactId>
+                <version>${spring.cloud.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -84,9 +120,9 @@
                                 <goal>generate</goal>
                             </goals>
                             <configuration>
-                                <inputSpec>
+                                <!-- <inputSpec>
                                     ${project.basedir}/src/main/resources/api.yml
-                                </inputSpec>
+                                </inputSpec> -->
                                 <generatorName>spring</generatorName>
                                 <library>spring-boot</library>
                                 <configOptions>
@@ -101,6 +137,11 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <configuration>
                         <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>${lombok.version}</version>
+                            </path>
                             <path>
                                 <groupId>org.mapstruct</groupId>
                                 <artifactId>mapstruct-processor</artifactId>

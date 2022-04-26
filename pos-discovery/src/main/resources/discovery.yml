@@ -1,0 +1,13 @@
+eureka:
+  client:  # Not a client, don't register with yourself
+    registerWithEureka: false
+    fetchRegistry: false
+
+server:
+  port: 8761   # HTTP (Tomcat) port
+
+spring:
+  thymeleaf:
+    enabled: false     # Disable Thymeleaf 
+  datasource:
+    type: org.springframework.jdbc.datasource.SimpleDriverDataSource

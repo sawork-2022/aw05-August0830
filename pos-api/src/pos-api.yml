@@ -1,0 +1,272 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Products
+  license:
+    name: MIT
+
+servers:
+  - url: http://localhost:8083/api
+
+paths:
+  /products:
+    get:
+      summary: List all products
+      operationId: listProducts
+      tags:
+        - products
+      responses:
+        '200':
+          description: A paged array of products
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Products"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /products/{productId}:
+    get:
+      summary: Info for a specific product
+      operationId: showProductById
+      tags:
+        - product
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          description: The id of the product to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /carts:
+    get:
+      summary: List all carts
+      operationId: listCarts
+      tags:
+        - carts 
+      responses:
+        200:
+          description: An array of carts
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Carts"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - carts
+      operationId: addCart
+      summary: Add a new cart
+      requestBody:
+        description: An empty cart
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Cart"
+        required: true
+      responses:
+        201:
+          description: the cart is added successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+        400:
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: cart not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /carts/{cartId}:
+    get:
+      summary: get a specific cart
+      operationId: getCartById
+      tags:
+        - cart
+      parameters:
+        - name: cartId
+          in: path
+          required: true
+          description: the id of target cart
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: successfully response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+    post:
+      summary: add item (quantity&product) to a specific cart
+      operationId: addItemToCart
+      tags:
+        - cart
+      parameters:
+        - name: cartId
+          in: path
+          required: true
+          description: id of target cart to add item
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        description: info of item 
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CartItem"
+        required: true
+      responses:
+        200:
+          description: successfully response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+        default:
+          description: error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /carts/{cartId}/totalAmount:
+    get:
+      summary: Total amount of target cart
+      operationId: getCartTotalAmount
+      tags:
+        - cart
+      parameters:
+        - name: cartId
+          in: path
+          required: true
+          description: id of target cart
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200: 
+          description: successfully response
+          content:
+            application/json:
+              schema:
+                type: number
+                format: double
+        default:
+          description: error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  schemas:
+    Carts:
+      type: array
+      items:
+        $ref: "#/components/schema/Cart"
+    CartItem:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          format: int32
+        quantity: 
+          type: integer
+          format: int32
+        product:
+          $ref: "#/components/schema/Product"
+    Cart:
+      type: object
+      required:
+        - id
+      properties:
+        id: 
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: "#/components/schema/CartItem"
+    Order:
+      type: object
+      required:
+        - id
+        - customId
+      properties:
+        id:
+          type: string
+        customId:
+          type: string
+        cartItems:
+          $ref: "#/components/schemas/Cart"
+        amount:
+          type: number
+          format: double
+        state:
+          type: string
+    Product:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        price:
+          type: double
+        image:
+          type: string
+    Products:
+      type: array
+      items:
+        $ref: "#/components/schemas/Product"
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
