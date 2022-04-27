@@ -12,11 +12,19 @@
     <artifactId>pos-cart</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
+    <properties>
+		<java.version>11</java.version>
+		<spring-cloud.version>2021.0.1</spring-cloud.version>
+	</properties>
 
     <dependencies>
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -60,23 +68,19 @@
             <version>2.2</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jpa</artifactId>
-            <version>2.6.4</version>
-        </dependency>
     </dependencies>
-    <!-- <dependencyManagement>
+    <dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
 				<version>${spring-cloud.version}</version>
-				<type>pom</type>
+				<!-- <version>Finchley.RELEASE</version> -->
+                <type>pom</type>
 				<scope>import</scope>
 			</dependency>
 		</dependencies>
-	</dependencyManagement> -->
+	</dependencyManagement>
 
      <build>
         <plugins>

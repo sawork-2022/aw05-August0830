@@ -2,6 +2,7 @@ package com.micropos.carts.mapper;
 
 import java.util.*;
 
+import com.micropos.carts.*;
 import com.micropos.carts.model.Cart;
 import com.micropos.carts.model.CartItem;
 import com.micropos.dto.CartDto;
@@ -9,8 +10,10 @@ import com.micropos.dto.CartItemDto;
 import com.micropos.dto.ProductDto;
 
 import org.mapstruct.Mapper;
+import org.springframework.stereotype.Component;
 
 @Mapper
+@Component
 public interface CartMapper {
     Collection<Cart> toCarts(Collection<CartDto> cartDtos);
     Collection<CartDto> toCartDtos(Collection<Cart> carts);
@@ -21,16 +24,6 @@ public interface CartMapper {
 
     default CartDto toCartDto(Cart cart){
         return new CartDto().id(cart.id()).items(toCartItemDtos(cart.cartItems()));
-    }
-
-    default List<CartItemDto> toCartItemDtos(List<CartItem> cartItems){
-        if(cartItems == null || cartItems.isEmpty())
-            return null;
-        List<CartItemDto> list = new ArrayList<>(cartItems.size());
-        for(CartItem cartItem: cartItems){
-            list.add(toCartItemDto(cartItem));
-        }
-        return list;
     }
 
     default CartItemDto toCartItemDto(CartItem cartItem){

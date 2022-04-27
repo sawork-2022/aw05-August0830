@@ -1,7 +1,10 @@
 package com.micropos.carts.repository;
 
-import org.springframework.data.repository.CurdRepository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
 import com.micropos.carts.model.Cart;
 
-public class CartRepository extends CurdRepository<Cart,Integer> {
+@Repository
+public interface CartRepository extends CrudRepository<Cart, Integer> {
 }

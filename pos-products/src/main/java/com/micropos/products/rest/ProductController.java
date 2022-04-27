@@ -4,6 +4,8 @@ import com.micropos.api.ProductsApi;
 import com.micropos.dto.ProductDto;
 import com.micropos.products.mapper.ProductMapper;
 import com.micropos.products.service.ProductService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +20,13 @@ import java.util.List;
 @RequestMapping("api")
 public class ProductController implements ProductsApi {
 
+    @Autowired
     private final ProductMapper productMapper;
 
+    @Autowired
     private final ProductService productService;
 
-
+   
     public ProductController(ProductService productService, ProductMapper productMapper) {
         this.productMapper = productMapper;
         this.productService = productService;

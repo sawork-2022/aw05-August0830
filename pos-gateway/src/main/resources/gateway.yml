@@ -10,6 +10,10 @@ spring:
           uri: http://localhost:8082
           predicates:
           - Path=/api/**
+        - id: posCarts
+          uri: http://localhost:8084
+          predicates:
+          - Path=/carts/**
 
     # thymeleaf:
   #   cache: false             # Allow Thymeleaf templates to be reloaded at runtime

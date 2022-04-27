@@ -6,8 +6,9 @@ import com.micropos.carts.model.Cart;
 import com.micropos.carts.model.CartItem;
 
 public interface CartService {
-    Cart addCart(Cart cart, CartItem item);
+    Cart addItemToCart(Cart cart, CartItem item);
     double checkout(Integer cartId);
-
+    Cart addEmptyCart(Cart cart);
     List<Cart> getAllCarts();
+    Cart getCartById(Integer id);
 }
