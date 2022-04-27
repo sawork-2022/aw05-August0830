@@ -224,23 +224,6 @@ components:
           type: array
           items:
             $ref: "#/components/schema/CartItem"
-    Order:
-      type: object
-      required:
-        - id
-        - customId
-      properties:
-        id:
-          type: string
-        customId:
-          type: string
-        cartItems:
-          $ref: "#/components/schemas/Cart"
-        amount:
-          type: number
-          format: double
-        state:
-          type: string
     Product:
       type: object
       required:
